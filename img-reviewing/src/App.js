@@ -5,6 +5,16 @@ export class App extends Component {
   state={
     profileimg:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
   }
+
+  imageHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if(reader.readyState === 2){
+        this.setState({profileImg: reader.result})
+      }
+    }
+    reader.readAsDataURL(e.target.files[0])
+  }
   render() {
     const {profileimg} = this.state
 
@@ -15,7 +25,7 @@ export class App extends Component {
           <div className='img-holder'>
             <img src={profileimg} alt="" id="img" className='img'></img>
           </div>
-          <input type="file" name="image-upload" id="input" accept='image/*'/>
+          <input type="file" name="image-upload" id="input" accept='image' onChange={this.imageHandler}/>
           <div className='label'>
             <label htmlFor="input" className='image-upload'>
               <i className='material-icons'>add_photo_alternate</i>
